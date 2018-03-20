@@ -1,9 +1,13 @@
 <div class="well">
   Pendings:
   <ul>
-    <li>To load the states on a promise after it is loaded.</li>
     <li>Test</li>
-
+    <li>To load the states on a promise after it is loaded.</li>
+    <li>add date and time input (Begin and End Date)</li>
+    <li>Add group level validator that makes sure past 3 years is completely covered. Validator should add a period textarea so the justification is entered.</li>
+    <li>generate in memory database</li>
+    <li>Test again</li>
+    <li>execute crud operations on this page</li>
   </ul>
 </div>
 <div>
@@ -31,23 +35,20 @@
                       </app-question>
                       <div *ngIf="i==(visualSection.members.length-1)" style="text-align:right;">
                           <span *ngIf="i!=0">
-                            <button   type="button" (click)="removeLastRepeatingGroup(dataRoot.get(visualSection.key), visualSection)" >Remove this {{visualSection.key}}</button>
+                            <button class="btn btn-default"  type="button" (click)="removeLastRepeatingGroup(dataRoot.get(visualSection.key), visualSection)" >Remove this {{visualSection.key}}</button>
                           </span>
-                          <button type="button" (click)="addRepeatingGroup(dataRoot.get(visualSection.key), visualSection)" >Add another {{visualSection.key}}</button></div>
-                          
+                          <button  class="btn btn-default" type="button" (click)="addRepeatingGroup(dataRoot.get(visualSection.key), visualSection)" >Add another {{visualSection.key}}</button></div>
                   </div>
-                  
                 </div>
             </div>  
         </div>
         <!-- dynamic structure ends -->   
         <div class="form-group">
-          <button type="submit" [disabled]="!dataRoot.valid">Save</button>
+          <button type="submit" class="btn btn-default" [disabled]="!dataRoot.valid">Save</button>
         </div>
       </div>
     </form>
-   
+    <div *ngIf="payLoad">
         <strong>Saved the following values</strong><br>{{payLoad}}
+    </div>
   </div>
-
-  {{dataRoot.value|json}}

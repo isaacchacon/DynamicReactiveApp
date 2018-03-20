@@ -14,9 +14,7 @@ import {QuestionControlService} from './question-control.service';
   providers:[QuestionControlService]
 })
 export class DynamicApplyNowComponent implements OnInit {
-
   
-//  questions: QuestionGroup;
   dataRoot: FormGroup;
   payLoad = '';
   visualSections:QuestionGroup[];
@@ -27,7 +25,6 @@ export class DynamicApplyNowComponent implements OnInit {
     this.visualSections =[];
     this.flattenQuestions(result, this.visualSections);
     this.visualSections.reverse();
-    //this.questions = result;
   }
 
   removeLastRepeatingGroup(formArray:FormArray, questionGroup:QuestionGroup ){
@@ -66,7 +63,8 @@ export class DynamicApplyNowComponent implements OnInit {
           key:originalQuestion.key,
           label: originalQuestion.label, 
           options:originalQuestion.options,
-          order:originalQuestion.order
+          order:originalQuestion.order,
+          validationErrors:originalQuestion.validationErrors,
         }));
       }else if(objectProperties.indexOf('type')>0){///it is a textbox kind of question!!!
         let originalQuestion = <TextboxQuestion> question;
@@ -76,7 +74,8 @@ export class DynamicApplyNowComponent implements OnInit {
           value:originalQuestion.value,
           required:originalQuestion.required,
           minLength:originalQuestion.minLength,
-          maxLength:originalQuestion.maxLength
+          maxLength:originalQuestion.maxLength,
+          validationErrors:originalQuestion.validationErrors
         });
         clonedControlArray.push(textboxQuestion);
       }
@@ -110,14 +109,16 @@ export class DynamicApplyNowComponent implements OnInit {
         label: 'First Name',
         value: '',
         required: true,
-        order: 1
+        order: 1,
+        validationErrors:{"required":"First Name Is Required"}
       }),
       new TextboxQuestion({
         key: 'lastName',
         label: 'Last Name',
         value: '',
         required: true,
-        order: 2
+        order: 2,
+        validationErrors:{"required":"Last Name Is Required"}
       }),
       new TextboxQuestion({
         key: 'phone',
@@ -125,7 +126,8 @@ export class DynamicApplyNowComponent implements OnInit {
         value: '',
         type:'tel',
         required: true,
-        order: 3
+        order: 3,
+        validationErrors:{"required":"Phone Is Required"}
       }),
 
       new TextboxQuestion({
@@ -134,7 +136,8 @@ export class DynamicApplyNowComponent implements OnInit {
         value:'',
         type: 'email',
         required: true, 
-        order: 4
+        order: 4,
+        validationErrors:{"required":"An Email Address Is Required"}
       }),
 
       new TextboxQuestion({
@@ -156,20 +159,23 @@ export class DynamicApplyNowComponent implements OnInit {
             label: 'Street Address',
             value: '',
             required: true,
-            order: 1
+            order: 1,
+            validationErrors:{"required":"Street Address Is Required"}
           }), 
           new TextboxQuestion({
             key: 'city',
             label: 'City',
             value: '',
             required: true,
-            order: 1
+            order: 1,
+            validationErrors:{"required":"City Is Required"}
           }), 
           new DropdownQuestion({
         key: 'state',
         label: 'State',
         options: [["ALABAMA","AL"],["ALASKA","AK"],["ARIZONA ","AZ"],["ARKANSAS","AR"],["CALIFORNIA ","CA"],["COLORADO ","CO"],["CONNECTICUT","CT"],["DELAWARE","DE"],["FLORIDA","FL"],["GEORGIA","GA"],["HAWAII","HI"],["IDAHO","ID"],["ILLINOIS","IL"],["INDIANA","IN"],["IOWA","IA"],["KANSAS","KS"],["KENTUCKY","KY"],["LOUISIANA","LA"],["MAINE","ME"],["MARYLAND","MD"],["MASSACHUSETTS","MA"],["MICHIGAN","MI"],["MINNESOTA","MN"],["MISSISSIPPI","MS"],["MISSOURI","MO"],["MONTANA","MT"],["NEBRASKA","NE"],["NEVADA","NV"],["NEW HAMPSHIRE","NH"],["NEW JERSEY","NJ"],["NEW MEXICO","NM"],["NEW YORK","NY"],["NORTH CAROLINA","NC"],["NORTH DAKOTA","ND"],["OHIO","OH"],["OKLAHOMA","OK"],["OREGON","OR"],["PENNSYLVANIA","PA"],["RHODE ISLAND","RI"],["SOUTH CAROLINA","SC"],["SOUTH DAKOTA","SD"],["TENNESSEE","TN"],["TEXAS","TX"],["UTAH","UT"],["VERMONT","VT"],["VIRGINIA ","VA"],["WASHINGTON","WA"],["WEST VIRGINIA","WV"],["WISCONSIN","WI"],["WYOMING","WY"]],
-        order: 3
+        order: 3,
+        validationErrors:{"required":"State Is Required"}
       }),
 
           new TextboxQuestion({
@@ -179,7 +185,8 @@ export class DynamicApplyNowComponent implements OnInit {
             required: true,
             order: 1,
             minLength:5,
-            maxLength:5
+            maxLength:5,
+            validationErrors:{"required":"Zip Code Is Required", "minlength":"Zip Code must be a 5 digit number"}
           }), 
 
         ]])

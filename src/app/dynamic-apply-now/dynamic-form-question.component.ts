@@ -10,9 +10,25 @@ import { QuestionBase }     from './question-base';
 export class DynamicFormQuestionComponent {
   @Input() question: QuestionBase<any>;
   @Input() form: FormGroup;
+
+  validationErrors = '';
+
+
   ngOnInit(){
-    
-  
+    this.form.controls[this.question.key].valueChanges.subscribe(data=> this.onValueChanged(data))
   }
-  get isValid() { return this.form.controls[this.question.key].valid; }
+
+  onValueChanged(data:any){
+    this.validationErrors = '';
+    const control = this.form.controls[this.question.key];
+    if (control && control.dirty && !control.valid) {
+		   for (const key in control.errors) {
+         if(this.question.validationErrors[key]){
+            this.validationErrors += this.question.validationErrors[key] + '. ';
+         }else{
+            this.validationErrors+=key +' error not defined in JSON.';
+         }
+       }
+    }
+  }
 }

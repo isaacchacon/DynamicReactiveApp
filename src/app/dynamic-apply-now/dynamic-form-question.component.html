@@ -8,5 +8,8 @@
               class="form-control"  >
         <option *ngFor="let opt of question.options" [value]="opt[1]">{{opt[0]}}</option>
       </select>
+      <div *ngIf="validationErrors" class="alert alert-danger" >
+        {{validationErrors}}
+      </div>
   </div> 
 </div>

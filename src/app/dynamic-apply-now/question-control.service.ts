@@ -43,9 +43,7 @@ export class QuestionControlService {
             validators.push(Validators.maxLength(textBoxQuestion.maxLength));
           }
         }
-          // group[question.key] = question.required ? new FormControl(question.value || '', Validators.required)
-          //                                         : new FormControl(question.value || '');
-           group[question.key] = new FormControl(question.value, validators);
+           group[question.key] = new FormControl(question.value,{validators: validators, updateOn:"blur"});
       }
     });
     result =  new FormGroup(group);
