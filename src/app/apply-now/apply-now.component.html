@@ -1,0 +1,107 @@
+<div class="well">
+Pendings:
+  <ul>
+    <li>add date and time input (Begin and End Date)</li>
+    <li>Add group level validator that makes sure past 3 years is completely covered. Validator should add a period textarea so the justification is entered.</li>
+    <li>Add validation on blur</li>
+    <li>generate in memory database</li>
+    <li>execute crud operations on this page</li>
+  </ul>
+</div>
+
+  <form [formGroup]="dataRoot"  class="form-horizontal" novalidate>
+    <div class="well">
+      <div class="panel panel-info">
+        <div class= "panel-heading"><h3  style="margin:0px;">Main Applicant's Personal Information</h3></div>
+        <div class= "panel-body">
+          <div class="well">
+            <div class="form-group">
+              <label for="mainFirstName" class="control-label col-sm-2">
+                First Name:</label>
+                <div class="col-sm-10">
+                <input type="text" id="mainFirstName" class="form-control" formControlName="firstName" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="mainLastName" class="control-label col-sm-2">
+                  Last Name:</label>
+                  <div class="col-sm-10">
+                  <input type="text" id="mainLastName" class="form-control"  formControlName="lastName" />
+                  </div>
+            </div>
+            <div class="form-group">
+                <label for="mainPhone" class="control-label col-sm-2">
+                  Mobile Phone:</label>
+                  <div class="col-sm-10">
+                  <input type="tel" id="mainPhone" class="form-control"  formControlName="phone" />
+                  </div>
+            </div>
+            <div class="form-group">
+                <label for="mainEmail" class="control-label col-sm-2">
+                  Email:</label>
+                  <div class="col-sm-10">
+                    <input type="email" id="mainEmail" class="form-control" formControlName="email" />
+                  </div>
+            </div>
+            <div class="form-group">
+              <label for="mainCreditScore" class="control-label col-sm-2">
+                Credit Score (If you know it):</label>
+                <div class="col-sm-10">
+                  <input type="text" id="mainCreditScore" class="form-control" formControlName="creditScore" />
+                </div>
+            </div>        
+          </div>
+        </div>  
+      </div>
+      <div class= "panel panel-info">
+      <div class= "panel-heading"><h3 style="margin:0px;">Main Applicant's 3 year Address History </h3></div>
+        <div class="panel-body" formArrayName="addresses">
+          <p style="font-weight:700" >Please enter your address history for the last 3 years:</p>
+          <div *ngIf="addressesProp?.controls">
+            <div *ngFor="let address of addressesProp.controls; let i = index" class="well" [formGroupName]="i" >
+                <h4>{{i==0?'Your Current Address:':'Addres #'+(i+1)+':'}}</h4>
+                <div class="form-group">
+                    <label for="{{'mainStreet'+i}}" class="control-label col-sm-2">
+                      Street Address:</label>
+                      <div class="col-sm-10">
+                      <input type="text" id="{{'mainStreet'+i}}" class="form-control" formControlName="street" />
+                      </div>
+                  </div>  
+                  <div class="form-group">
+                      <label for="{{'mainCity'+i}}" class="control-label col-sm-2">
+                        City:</label>
+                        <div class="col-sm-10">
+                        <input type="text" id="{{'mainCity'+i}}" class="form-control" formControlName="city" />
+                        </div>
+                    </div>  
+                      <div class="form-group">
+                          <label for="{{'mainState'+i}}" class="control-label col-sm-2">
+                              State:</label>
+                              <div class="col-sm-4">
+                              <!--input type="text" id="{{'mainState'+i}}" class="form-control" formControlName="state" /-->
+                              <select id="{{'mainStateDdl'+i}}" class="form-control"  formControlName="state" >
+                                <option  selected="selected" value=""></option> 
+                                <option *ngFor="let ddlEntry of ddlStates" value="{{ddlEntry[1]}}">
+                                  {{ddlEntry[0]}}
+                                </option>
+                              </select>
+                              </div>
+                          <label for="{{'mainZip'+i}}" class="control-label col-sm-2">
+                            Zip Code:</label>
+                            <div class="col-sm-4">
+                            <input type="text" id="{{'mainZip'+i}}" class="form-control" formControlName="zip" />
+                            </div>
+                      </div>  
+                      <div *ngIf="i==(addressesProp.controls.length-1)" style="text-align:right;">
+                        <span *ngIf="i!=0">
+                          <button   type="button" (click)="removeLastAddress(i)" >Remove this Address</button>
+                        </span>
+                        <button type="button" (click)="addAddress()" >Add another Address</button></div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</form>
+{{dataRoot.value|json}}
+{{addressesProp.controls.length}}

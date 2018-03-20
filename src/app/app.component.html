@@ -1,0 +1,20 @@
+<!--The content below is only a placeholder and can be replaced.-->
+  <div class="container">
+
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Rentals</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Properties</a></li>
+        <li [class.active]="isUrlMatch('applynow')"><a routerLink='/applynow' >Apply Now</a></li>
+        <li [class.active]="isUrlMatch('dapplynow')"><a routerLink='/dapplynow' >Dynamic Apply Now</a></li>
+        <li><a href="#">Policies</a></li>
+        <li><a href="#">About us</a></li>
+        <li><a href="#">Contact us</a></li>
+      </ul>
+    </div>
+  </nav>
+  <main><router-outlet></router-outlet></main></div>
