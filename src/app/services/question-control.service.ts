@@ -1,9 +1,9 @@
 import { Injectable }   from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder, ValidatorFn, AbstractControl, FormArray } from '@angular/forms';
 
-import { QuestionBase } from './question-base';
-import {QuestionGroup} from './question-group';
-import { TextboxQuestion } from './question-textbox';
+import { QuestionBase } from '../dynamic-apply-now/./question-base';
+import {QuestionGroup} from '../dynamic-apply-now/./question-group';
+import { TextboxQuestion } from '../dynamic-apply-now/./question-textbox';
 
 @Injectable()
 export class QuestionControlService {
@@ -15,6 +15,10 @@ export class QuestionControlService {
     formArray.push(this.toFormGroup(questionGroup, true));
   }
 
+  addGrouptoFormGroup(questionGroup:QuestionGroup, rootFormGroup:FormGroup){
+    rootFormGroup.addControl(questionGroup.key, this.toFormGroup(questionGroup,true));
+  }
+
   ///WIll try to use this as a unique master method with internal Form Groups.
   ///Eventually will also consider FormArrrays.
   toFormGroup(questionGroup: QuestionGroup, skipArrayCreation:boolean ):AbstractControl {
@@ -23,8 +27,10 @@ export class QuestionControlService {
 
     questionGroup.members[0].forEach(questionOrGroup => {
       //if(Object.keys(questionOrGroup).indexOf("members")>=0){
-        // for instanceof to work we needed to create object through constructor?
-      if(questionOrGroup instanceof QuestionGroup){
+        // for instanceof to work we needed to create object through constructor.
+        //if getting it from json, won't work.
+      if(Object.getOwnPropertyNames(questionOrGroup).indexOf("title")>=0){
+      //if(questionOrGroup instanceof QuestionGroup){
         group[questionOrGroup.key]= this.toFormGroup(<QuestionGroup>questionOrGroup, false);
       }
       else{
@@ -34,7 +40,8 @@ export class QuestionControlService {
           validators.push(Validators.required);
         }
         let objectProperties = Object.getOwnPropertyNames(question);
-        if(objectProperties.indexOf("minLength")>0||objectProperties.indexOf("maxLength")>0){
+        if(objectProperties.indexOf("minLength")>0||objectProperties.indexOf("maxLength")>0||
+            objectProperties.indexOf("currency")){
           let textBoxQuestion = question as TextboxQuestion;
           if(textBoxQuestion.minLength){
             validators.push(Validators.minLength(textBoxQuestion.minLength));
@@ -42,8 +49,12 @@ export class QuestionControlService {
           if(textBoxQuestion.maxLength){
             validators.push(Validators.maxLength(textBoxQuestion.maxLength));
           }
+          if(textBoxQuestion.currency){
+            validators.push(Validators.pattern(/(?=.*\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/))
+          }
         }
-           group[question.key] = new FormControl(question.value,{validators: validators, updateOn:"blur"});
+           group[question.key] = new FormControl(question.value,{validators: validators, 
+            updateOn:question.controlType=="dropdown"?"change":"blur"});
       }
     });
     result =  new FormGroup(group);

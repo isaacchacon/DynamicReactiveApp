@@ -6,11 +6,11 @@
     <li>add date and time input (Begin and End Date)</li>
     <li>Add group level validator that makes sure past 3 years is completely covered. Validator should add a period textarea so the justification is entered.</li>
     <li>generate in memory database</li>
-    <li>Test again</li>
+    <li>Test again - review testing concepts from meeting</li>
     <li>execute crud operations on this page</li>
   </ul>
 </div>
-<div>
+<div *ngIf="dataRoot">
     <form (ngSubmit)="onSubmit()" class="form-horizontal" [formGroup]="dataRoot">
       <div class="well">
         <!-- dynamic structure begins -->
@@ -31,7 +31,7 @@
                       <h4>{{visualSection.key+' #'+(i+1)}}</h4>
                       <app-question *ngFor="let questionOrGroup of formArrayRow" 
                       [question]="questionOrGroup"
-                      [form]="dataRoot.get(visualSection.key).controls[i]">
+                      [form]="dataRoot.get(visualSection.key).controls[i]" [idSuffix]="i">
                       </app-question>
                       <div *ngIf="i==(visualSection.members.length-1)" style="text-align:right;">
                           <span *ngIf="i!=0">

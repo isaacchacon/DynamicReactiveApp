@@ -1,0 +1,384 @@
+{
+    "rootQuestion":{
+    "key":null,
+    "order":1,
+    "title":"Main Applicant's Personal Information",
+    "intro":"",
+    "repeating":false,
+    "members":[
+        [
+            {
+                "value":"",
+                "key":"firstName",
+                "label":"First Name",
+                "required":true,
+                "order":1,
+                "controlType":"textbox",
+                "validationErrors":{
+                "required":"First Name Is Required"
+                },
+                "type":"",
+                "minLength":null,
+                "maxLength":null
+            },
+            {
+                "value":"",
+                "key":"lastName",
+                "label":"Last Name",
+                "required":true,
+                "order":2,
+                "controlType":"textbox",
+                "validationErrors":{
+                "required":"Last Name Is Required"
+                },
+                "type":"",
+                "minLength":null,
+                "maxLength":null
+            },
+            {
+                "value":"",
+                "key":"phone",
+                "label":"Mobile Phone",
+                "required":true,
+                "order":3,
+                "controlType":"textbox",
+                "validationErrors":{
+                "required":"Phone Is Required"
+                },
+                "type":"tel",
+                "minLength":null,
+                "maxLength":null
+            },
+            {
+                "value":"",
+                "key":"emailAddress",
+                "label":"Email",
+                "required":true,
+                "order":4,
+                "controlType":"textbox",
+                "validationErrors":{
+                "required":"An Email Address Is Required"
+                },
+                "type":"email",
+                "minLength":null,
+                "maxLength":null
+            },
+            {
+                "value":"",
+                "key":"creditScore",
+                "label":"Credit Score (If you know it)",
+                "required":false,
+                "order":5,
+                "controlType":"textbox",
+                "validationErrors":{
+
+                },
+                "type":"",
+                "minLength":null,
+                "maxLength":null
+            },
+            {
+                "key":"address",
+                "order":6,
+                "title":"Main Applicant's 3 year Address History",
+                "intro":"Please enter your address history for the last 3 years:",
+                "repeating":true,
+                "members":[
+                [
+                    {
+                        "value":"",
+                        "key":"street",
+                        "label":"Street Address",
+                        "required":true,
+                        "order":1,
+                        "controlType":"textbox",
+                        "validationErrors":{
+                            "required":"Street Address Is Required"
+                        },
+                        "type":"",
+                        "minLength":null,
+                        "maxLength":null
+                    },
+                    {
+                        "value":"",
+                        "key":"city",
+                        "label":"City",
+                        "required":true,
+                        "order":1,
+                        "controlType":"textbox",
+                        "validationErrors":{
+                            "required":"City Is Required"
+                        },
+                        "type":"",
+                        "minLength":null,
+                        "maxLength":null
+                    },
+                    {
+                        "key":"state",
+                        "label":"State",
+                        "required":false,
+                        "order":3,
+                        "controlType":"dropdown",
+                        "validationErrors":{
+                            "required":"State Is Required"
+                        },
+                        "options":[
+                            [
+                            "ALABAMA",
+                            "AL"
+                            ],
+                            [
+                            "ALASKA",
+                            "AK"
+                            ],
+                            [
+                            "ARIZONA ",
+                            "AZ"
+                            ],
+                            [
+                            "ARKANSAS",
+                            "AR"
+                            ],
+                            [
+                            "CALIFORNIA ",
+                            "CA"
+                            ],
+                            [
+                            "COLORADO ",
+                            "CO"
+                            ],
+                            [
+                            "CONNECTICUT",
+                            "CT"
+                            ],
+                            [
+                            "DELAWARE",
+                            "DE"
+                            ],
+                            [
+                            "FLORIDA",
+                            "FL"
+                            ],
+                            [
+                            "GEORGIA",
+                            "GA"
+                            ],
+                            [
+                            "HAWAII",
+                            "HI"
+                            ],
+                            [
+                            "IDAHO",
+                            "ID"
+                            ],
+                            [
+                            "ILLINOIS",
+                            "IL"
+                            ],
+                            [
+                            "INDIANA",
+                            "IN"
+                            ],
+                            [
+                            "IOWA",
+                            "IA"
+                            ],
+                            [
+                            "KANSAS",
+                            "KS"
+                            ],
+                            [
+                            "KENTUCKY",
+                            "KY"
+                            ],
+                            [
+                            "LOUISIANA",
+                            "LA"
+                            ],
+                            [
+                            "MAINE",
+                            "ME"
+                            ],
+                            [
+                            "MARYLAND",
+                            "MD"
+                            ],
+                            [
+                            "MASSACHUSETTS",
+                            "MA"
+                            ],
+                            [
+                            "MICHIGAN",
+                            "MI"
+                            ],
+                            [
+                            "MINNESOTA",
+                            "MN"
+                            ],
+                            [
+                            "MISSISSIPPI",
+                            "MS"
+                            ],
+                            [
+                            "MISSOURI",
+                            "MO"
+                            ],
+                            [
+                            "MONTANA",
+                            "MT"
+                            ],
+                            [
+                            "NEBRASKA",
+                            "NE"
+                            ],
+                            [
+                            "NEVADA",
+                            "NV"
+                            ],
+                            [
+                            "NEW HAMPSHIRE",
+                            "NH"
+                            ],
+                            [
+                            "NEW JERSEY",
+                            "NJ"
+                            ],
+                            [
+                            "NEW MEXICO",
+                            "NM"
+                            ],
+                            [
+                            "NEW YORK",
+                            "NY"
+                            ],
+                            [
+                            "NORTH CAROLINA",
+                            "NC"
+                            ],
+                            [
+                            "NORTH DAKOTA",
+                            "ND"
+                            ],
+                            [
+                            "OHIO",
+                            "OH"
+                            ],
+                            [
+                            "OKLAHOMA",
+                            "OK"
+                            ],
+                            [
+                            "OREGON",
+                            "OR"
+                            ],
+                            [
+                            "PENNSYLVANIA",
+                            "PA"
+                            ],
+                            [
+                            "RHODE ISLAND",
+                            "RI"
+                            ],
+                            [
+                            "SOUTH CAROLINA",
+                            "SC"
+                            ],
+                            [
+                            "SOUTH DAKOTA",
+                            "SD"
+                            ],
+                            [
+                            "TENNESSEE",
+                            "TN"
+                            ],
+                            [
+                            "TEXAS",
+                            "TX"
+                            ],
+                            [
+                            "UTAH",
+                            "UT"
+                            ],
+                            [
+                            "VERMONT",
+                            "VT"
+                            ],
+                            [
+                            "VIRGINIA ",
+                            "VA"
+                            ],
+                            [
+                            "WASHINGTON",
+                            "WA"
+                            ],
+                            [
+                            "WEST VIRGINIA",
+                            "WV"
+                            ],
+                            [
+                            "WISCONSIN",
+                            "WI"
+                            ],
+                            [
+                            "WYOMING",
+                            "WY"
+                            ]
+                        ]
+                    },
+                    {
+                        "value":"",
+                        "key":"zip",
+                        "label":"Zip Code",
+                        "required":true,
+                        "order":1,
+                        "controlType":"textbox",
+                        "validationErrors":{
+                            "required":"Zip Code Is Required",
+                            "minlength":"Zip Code must be a 5 digit number"
+                        },
+                        "type":"",
+                        "minLength":5,
+                        "maxLength":5
+                    },
+                    {
+                        "key":"rentOrOwn",
+                        "label":"Did you Rent or Own this home?",
+                        "required":false,
+                        "order":3,
+                        "controlType":"radio",
+                        "validationErrors":{
+                            "required":"Please specify if you rented or owned this place"
+                        },
+                        "options":[
+                            [
+                            "Rent",
+                            "Ren"
+                            ],
+                            [
+                            "Own",
+                            "Own"
+                            ]
+                        ]
+                    },
+                    {
+                        "value":"",
+                        "key":"monthlyPayment",
+                        "label":"Monthly Payment",
+                        "required":false,
+                        "order":1,
+                        "controlType":"textbox",
+                        "validationErrors":{
+                            "pattern":"You must enter a valid money amount."
+                        },
+                        "type":"",
+                        "minLength":null,
+                        "maxLength":null,
+                        "currency":true
+                    }
+                ]
+                ]
+            }
+        ]
+    ]
+    }
+}

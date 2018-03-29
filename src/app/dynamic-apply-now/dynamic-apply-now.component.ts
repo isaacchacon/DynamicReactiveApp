@@ -5,13 +5,14 @@ import {QuestionBase} from './question-base';
 import {QuestionGroup} from './question-group';
 import {DropdownQuestion} from './question-dropdown';
 import {TextboxQuestion} from './question-textbox';
-import {QuestionControlService} from './question-control.service';
+import {QuestionControlService} from '../services/question-control.service';
+import { RadioQuestion } from './question-radio';
+import { RemoteQuestionsService } from '../services/remote-questions.service';
 
 @Component({
   selector: 'app-dynamic-apply-now',
   templateUrl: './dynamic-apply-now.component.html',
   styleUrls: ['./dynamic-apply-now.component.css'],
-  providers:[QuestionControlService]
 })
 export class DynamicApplyNowComponent implements OnInit {
   
@@ -19,12 +20,18 @@ export class DynamicApplyNowComponent implements OnInit {
   payLoad = '';
   visualSections:QuestionGroup[];
 
-  constructor(private qcs: QuestionControlService) {
-    let result = this.getQuestions();
-    this.dataRoot =<FormGroup> this.qcs.toFormGroup(result, false);
-    this.visualSections =[];
-    this.flattenQuestions(result, this.visualSections);
-    this.visualSections.reverse();
+  constructor(private qcs: QuestionControlService, private remoteQuestions:RemoteQuestionsService ) {
+  }
+
+  ngOnInit(){
+    this.remoteQuestions.getRemoteQuestions().subscribe(result=> {
+    //let result = this.getQuestions();
+      this.dataRoot =<FormGroup> this.qcs.toFormGroup(result, false);
+      this.visualSections =[];
+      this.flattenQuestions(result, this.visualSections);
+      this.visualSections.reverse();
+    }, 
+    error=>{console.log(error)});
   }
 
   removeLastRepeatingGroup(formArray:FormArray, questionGroup:QuestionGroup ){
@@ -35,7 +42,8 @@ export class DynamicApplyNowComponent implements OnInit {
   private flattenQuestions(group:QuestionGroup, flattenedGroupArray:QuestionGroup[]){
     let flattenedGroup = new QuestionGroup(group.key,group.order,group.title,group.intro,group.repeating,[]);
     for(let i = 0;i<group.members[0].length;i++){
-      if(group.members[0][i] instanceof QuestionGroup){
+      if(Object.getOwnPropertyNames(group.members[0][i]).indexOf("title")>=0){
+      //if(group.members[0][i] instanceof QuestionGroup){
         this.flattenQuestions(<QuestionGroup>group.members[0][i],flattenedGroupArray);
       }else{
         if(flattenedGroup.members.length ==0){
@@ -56,39 +64,56 @@ export class DynamicApplyNowComponent implements OnInit {
     ///next section deep clones this group's questions and adds a new item to the array
     let clonedControlArray: QuestionBase<any>[] = [];
     for(let question of questionGroup.members[0]){
-      let objectProperties = Object.getOwnPropertyNames(question);
-      if(objectProperties.indexOf('options')>0){///it means it's a drop down list...{
-        let originalQuestion = <DropdownQuestion> question;
-        clonedControlArray.push(new DropdownQuestion({
-          key:originalQuestion.key,
-          label: originalQuestion.label, 
-          options:originalQuestion.options,
-          order:originalQuestion.order,
-          validationErrors:originalQuestion.validationErrors,
-        }));
-      }else if(objectProperties.indexOf('type')>0){///it is a textbox kind of question!!!
-        let originalQuestion = <TextboxQuestion> question;
-        let textboxQuestion:TextboxQuestion = new TextboxQuestion({
-          key:originalQuestion.key,
-          label:originalQuestion.label,
-          value:originalQuestion.value,
-          required:originalQuestion.required,
-          minLength:originalQuestion.minLength,
-          maxLength:originalQuestion.maxLength,
-          validationErrors:originalQuestion.validationErrors
-        });
-        clonedControlArray.push(textboxQuestion);
+      let newObject:any = {};
+      for(let propertyName in question){
+        newObject[propertyName]= question[propertyName];
       }
+      clonedControlArray.push(newObject);
     }
     questionGroup.members.push(clonedControlArray);
-
-  
   }
+
+  // questionToBeAddedDynamically:QuestionGroup= new QuestionGroup(
+  //   "animals", 
+  //   7,
+  //   "Pets and Animals",
+  //   "Please enter what kind of pet you have",
+  //   false, //mark this group as a repeating
+  //   [[
+  //     new TextboxQuestion({
+  //       key: 'petName',
+  //       label: 'Pet Name',
+  //       value: '',
+  //       required: true,
+  //       order: 1,
+  //       validationErrors:{"required":"Pet Name Is Required"}
+  //     }),
+  //     new DropdownQuestion({
+  //       key: 'petType',
+  //       label: 'Pet Type',
+  //       value: 'Cat',
+  //       options: [["Dog","Dog"],["Cat","Cat"],["Fish","FSH"]],
+  //       order: 2,
+  //       validationErrors:{"required":"State Is Required"}
+  //     })]]);
 
  
-  ngOnInit() {
+ 
+
+  // AddDynamicControls(){
+  //   this.qcs.addGrouptoFormGroup(this.questionToBeAddedDynamically, this.dataRoot);
+  //   this.visualSections.push(this.questionToBeAddedDynamically);
+  //   this.groupAdded = true;
     
-  }
+  // }
+  // groupAdded:boolean;
+  // ToggleLastGroup(){
+  //   if(this.groupAdded)
+  //   this.visualSections.pop();
+  //   else
+  //   this.visualSections.push(this.questionToBeAddedDynamically);
+  //   this.groupAdded = !this.groupAdded;
+  // }
  
   onSubmit() {
     this.payLoad = JSON.stringify(this.dataRoot.value);
@@ -187,7 +212,23 @@ export class DynamicApplyNowComponent implements OnInit {
             minLength:5,
             maxLength:5,
             validationErrors:{"required":"Zip Code Is Required", "minlength":"Zip Code must be a 5 digit number"}
-          }), 
+          }),
+          new RadioQuestion({
+            key: 'rentOrOwn',
+            label: 'Did you Rent or Own this home?',
+            options: [["Rent","Ren"],["Own","Own"]],
+            order: 3,
+            validationErrors:{"required":"Please specify if you rented or owned this place"}
+          }),
+          new TextboxQuestion({
+            key: 'monthlyPayment',
+            label: 'Monthly Payment',
+            value: '',
+            order: 1,       
+            currency: true,
+            validationErrors:{"pattern":"You must enter a valid money amount."}     
+          }),
+          
 
         ]])
       
