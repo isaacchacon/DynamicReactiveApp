@@ -10,10 +10,4 @@ export class AppComponent {
   constructor(public router:Router){
   }
 
-  isUrlMatch(searchTerm:string){
-    return this.router.url.toLowerCase().indexOf(searchTerm)==1;
-  }
-
-
-
 }

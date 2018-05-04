@@ -13,6 +13,13 @@
           <input type="radio"  [formControlName]="question.key" 
           [value]="opt[1]">{{opt[0]}}</label>
       </div>
+      <div  *ngSwitchCase="'date'"  >
+        <input type="text" [matDatepicker]="datePicker1"
+          [formControlName]="question.key"
+              class="form-control"
+              [id]="question.key+idSuffix" [min]="question.minDateMoment" [max]="question.maxDateMoment" (click)="datePicker1.open();"/>
+              <mat-datepicker touchUi="true"  #datePicker1></mat-datepicker>
+      </div>
       <div *ngIf="validationErrors" class="alert alert-danger" >
         {{validationErrors}}
       </div>

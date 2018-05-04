@@ -6,8 +6,12 @@ import {QuestionGroup} from './question-group';
 import {DropdownQuestion} from './question-dropdown';
 import {TextboxQuestion} from './question-textbox';
 import {QuestionControlService} from '../services/question-control.service';
+import {DateQuestion} from './question-date';
 import { RadioQuestion } from './question-radio';
 import { RemoteQuestionsService } from '../services/remote-questions.service';
+import { DialogService } from '../services/dialog.service';
+import { Observable } from 'rxjs/Observable';
+import {Router} from '@angular/router'
 
 @Component({
   selector: 'app-dynamic-apply-now',
@@ -20,18 +24,44 @@ export class DynamicApplyNowComponent implements OnInit {
   payLoad = '';
   visualSections:QuestionGroup[];
 
-  constructor(private qcs: QuestionControlService, private remoteQuestions:RemoteQuestionsService ) {
+  constructor(private qcs: QuestionControlService, 
+              private remoteQuestions:RemoteQuestionsService, 
+              private dialogService:DialogService,
+              private router:Router,
+     ) {
   }
 
   ngOnInit(){
     this.remoteQuestions.getRemoteQuestions().subscribe(result=> {
     //let result = this.getQuestions();
+      this.preProcessResults(result);
       this.dataRoot =<FormGroup> this.qcs.toFormGroup(result, false);
       this.visualSections =[];
       this.flattenQuestions(result, this.visualSections);
       this.visualSections.reverse();
     }, 
-    error=>{console.log(error)});
+    error=>{console.log(error);this.router.navigate(['/oops']);});
+  }
+
+  /**
+   * Manipulates the JSON model to instantiate complex objects where needed.
+   * 
+   * @param source 
+   */
+  preProcessResults(source:QuestionGroup){
+    if(source.members&&source.members.length==1&&source.members[0]&&source.members[0].length>0){
+      for(let i= 0 ; i<source.members[0].length;i++){
+        let member = source.members[0][i];
+        if(Object.getOwnPropertyNames(member).indexOf("title")>=0){
+          this.preProcessResults(<QuestionGroup>member);
+        }else{
+          let question = <QuestionBase<any>>member;
+          if(question.controlType=="date"){
+            source.members[0][i] = new DateQuestion(question);
+          }
+        }
+      }
+    }
   }
 
   removeLastRepeatingGroup(formArray:FormArray, questionGroup:QuestionGroup ){
@@ -97,9 +127,6 @@ export class DynamicApplyNowComponent implements OnInit {
   //       validationErrors:{"required":"State Is Required"}
   //     })]]);
 
- 
- 
-
   // AddDynamicControls(){
   //   this.qcs.addGrouptoFormGroup(this.questionToBeAddedDynamically, this.dataRoot);
   //   this.visualSections.push(this.questionToBeAddedDynamically);
@@ -118,6 +145,16 @@ export class DynamicApplyNowComponent implements OnInit {
   onSubmit() {
     this.payLoad = JSON.stringify(this.dataRoot.value);
   }
+
+  /**
+   * Called before leaving page if there are changes on the page.
+   */
+  canDeactivate(): Observable<boolean> | boolean {
+    if (this.dataRoot&& this.dataRoot.dirty) {
+        return this.dialogService.confirm('Discard changes for this new application?');
+    }
+    return true;
+  }	
 
   
 
