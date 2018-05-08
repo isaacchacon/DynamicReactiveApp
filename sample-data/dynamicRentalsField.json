@@ -106,9 +106,11 @@
                         "required":true,
                         "order":1,
                         "controlType":"date",
+                        "maxDate":"Today",
                         "validationErrors":{
                         "required":"A Resided here from DATE is REQUIRED",
-                        "matDatepickerParse": "Please enter a VALID DATE"
+                        "matDatepickerParse": "Please enter a VALID DATE",
+                        "matDatepickerMax" : "Can't select a date greater than TODAY!!"
                         }              
                     },
                     {
@@ -118,9 +120,11 @@
                         "required":true,
                         "order":1,
                         "controlType":"date",
+                        "maxDate":"Today",
                         "validationErrors":{
                         "required":"A Resided here until DATE is REQUIRED",
-                        "matDatepickerParse": "Please enter a VALID DATE"
+                        "matDatepickerParse": "Please enter a VALID DATE",
+                        "matDatepickerMax" : "Can't select a date greater than TODAY!!"
                         }              
                     },
                     {
