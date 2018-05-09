@@ -23,10 +23,15 @@
               <!-- the above formGroup attribute must beginwith attr in order to conditionate its presence -->
                 <p style="font-weight:700" *ngIf="visualSection.intro" >{{visualSection.intro}}</p>
                 <div *ngIf ="!visualSection.repeating" class="well">
-                  <app-question *ngFor="let questionOrGroup of visualSection.members[0]" 
-                    [question]="questionOrGroup" 
-                    [form]="visualSection.key?dataRoot.get(visualSection.key):dataRoot">
-                  </app-question>
+                  <div *ngFor="let questionOrGroup of visualSection.members[0]" >
+                    <app-question  *ngIf="questionOrGroup.controlType!='textbox'&&questionOrGroup.controlType!='date'"
+                      [question]="questionOrGroup" 
+                      [form]="visualSection.key?dataRoot.get(visualSection.key):dataRoot">
+                    </app-question>
+                    <app-dynamic-question  *ngIf="questionOrGroup.controlType=='textbox'||questionOrGroup.controlType=='date'"
+                    [question]="questionOrGroup" [formControl]="visualSection.key?dataRoot.get(visualSection.key+'.'+questionOrGroup.key):dataRoot.get(questionOrGroup.key)" [formControlName]="questionOrGroup.key"  >
+                    </app-dynamic-question>
+                  </div>
                 </div>
                 <div *ngIf ="visualSection.repeating"  formArrayName="{{visualSection.key}}">
                   <div class="well" *ngFor="let formArrayRow of visualSection.members; let i = index;" formGroupName="{{i}}">
@@ -54,3 +59,4 @@
         <strong>Saved the following values</strong><br>{{payLoad}}
     </div>
   </div>
+  
