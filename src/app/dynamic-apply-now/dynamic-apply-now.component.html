@@ -4,15 +4,15 @@
     <li>Add proper errors for network conectivity. </li>
     <li>Test</li>
     <li>To load the states on a promise after it is loaded.</li>
-    <li>add date and time input (Begin and End Date)</li>
     <li>Add group level validator that makes sure past 3 years is completely covered. Validator should add a period textarea so the justification is entered.</li>
-    <li>generate in memory database</li>
     <li>Test again - review testing concepts from meeting</li>
-    <li>execute crud operations on this page</li>
-    
+    <li>execute crud operations on this page</li>    
   </ul>
 </div>
 <div *ngIf="dataRoot">
+    <div style="position:sticky;top:0px;background-color:turquoise;z-index:400">
+      {{dataRoot.value|json}}
+    </div>
     <form (ngSubmit)="onSubmit()" class="form-horizontal" [formGroup]="dataRoot">
       <div class="well">
         <!-- dynamic structure begins -->
@@ -24,11 +24,7 @@
                 <p style="font-weight:700" *ngIf="visualSection.intro" >{{visualSection.intro}}</p>
                 <div *ngIf ="!visualSection.repeating" class="well">
                   <div *ngFor="let questionOrGroup of visualSection.members[0]" >
-                    <app-question  *ngIf="questionOrGroup.controlType!='textbox'&&questionOrGroup.controlType!='date'"
-                      [question]="questionOrGroup" 
-                      [form]="visualSection.key?dataRoot.get(visualSection.key):dataRoot">
-                    </app-question>
-                    <app-dynamic-question  *ngIf="questionOrGroup.controlType=='textbox'||questionOrGroup.controlType=='date'"
+                    <app-dynamic-question
                     [question]="questionOrGroup" [formControl]="visualSection.key?dataRoot.get(visualSection.key+'.'+questionOrGroup.key):dataRoot.get(questionOrGroup.key)" [formControlName]="questionOrGroup.key"  >
                     </app-dynamic-question>
                   </div>
@@ -36,10 +32,9 @@
                 <div *ngIf ="visualSection.repeating"  formArrayName="{{visualSection.key}}">
                   <div class="well" *ngFor="let formArrayRow of visualSection.members; let i = index;" formGroupName="{{i}}">
                       <h4>{{visualSection.key+' #'+(i+1)}}</h4>
-                      <app-question *ngFor="let questionOrGroup of formArrayRow" 
-                      [question]="questionOrGroup"
-                      [form]="dataRoot.get(visualSection.key).controls[i]" [idSuffix]="i">
-                      </app-question>
+                        <app-dynamic-question  *ngFor="let questionOrGroup of formArrayRow"
+                          [question]="questionOrGroup" [formControl]="dataRoot.get(visualSection.key).controls[i].get(questionOrGroup.key)" [formControlName]="questionOrGroup.key"  >
+                        </app-dynamic-question>
                       <div *ngIf="i==(visualSection.members.length-1)" style="text-align:right;">
                           <span *ngIf="i!=0">
                             <button class="btn btn-default"  type="button" (click)="removeLastRepeatingGroup(dataRoot.get(visualSection.key), visualSection)" >Remove this {{visualSection.key}}</button>

@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label class="control-label col-sm-2" [attr.for]="question.key">{{question.label}}:</label>
+    <label class="control-label col-sm-2" [attr.for]="question.key+idSuffix">{{question.label}}:</label>
     <div class="col-sm-10" [ngSwitch]="question.controlType" >
         <input *ngSwitchCase="'textbox'"  
         #input1 class="form-control" (blur)="onTouched();" (input)="onChange(input1.value);"
@@ -7,12 +7,22 @@
 
          [type]="question.type"  [attr.maxLength]="question.maxLength"
          [attr.maxLength]="question.maxLength" >
-        <div  *ngSwitchCase="'date'"  >
+         <select  *ngSwitchCase="'dropdown'" #select1 [id]="question.key+idSuffix" [value]="answer"
+             (change)="onChange(select1.value);onTouched();" [attr.disabled]="disabled"
+              class="form-control"  >
+            <option *ngFor="let opt of question.options" [value]="opt[1]">{{opt[0]}}</option>
+        </select>
+        <div *ngSwitchCase="'radio'"  >
+            <label class="radio-inline" *ngFor="let opt of question.options" >
+              <input #radio1 type="radio" (change)="onChange(radio1.value);onTouched();" [attr.disabled]="disabled"
+              [value]="opt[1]" name="question.key+idSuffix">{{opt[0]}}</label>
+        </div>
+        <div  *ngSwitchCase="'date'" #parentDiv  >
                 <input type="text" [matDatepicker]="datePicker1" 
-                 #input1 class="form-control" (blur)="onTouched();" (input)="onChange(input1.value);"
-                 [id]="question.key+idSuffix" [value]="answer" [attr.disabled]="disabled"
+                 #input1 class="form-control" (input)="internalDirty=true;" (blur)="handleInputBlur(datePicker1.opened, input1.value)" (dateChange)="onChange($event.value);onTouched();"
+                 [id]="question.key+idSuffix" value="{{answer}}" [attr.disabled]="disabled"
                   [min]="question.minDateMoment" [max]="question.maxDateMoment" (click)="datePicker1.open();"/>
-                      <mat-datepicker touchUi="true"  #datePicker1></mat-datepicker>
+                      <mat-datepicker touchUi="true" (closed)="onTouched();parentDiv.focus();"  #datePicker1></mat-datepicker>
         </div>
         <div *ngIf="validationErrors" class="alert alert-danger" >
                 {{validationErrors}}

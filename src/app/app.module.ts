@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { ApplyNowComponent} from './apply-now/apply-now.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { DynamicApplyNowComponent } from './dynamic-apply-now/dynamic-apply-now.component';
-import {DynamicFormQuestionComponent} from './dynamic-apply-now/dynamic-form-question.component';
 import {DynamicQuestionComponent} from './dynamic-apply-now/dynamic-question.component';
 import {HttpClientModule} from '@angular/common/http';
 import {RemoteQuestionsService} from './services/remote-questions.service';
@@ -27,7 +26,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     ApplyNowComponent,
     WelcomeComponent,
     DynamicApplyNowComponent,
-    DynamicFormQuestionComponent,
     DynamicQuestionComponent,
     SomethingWentWrongComponent,
     

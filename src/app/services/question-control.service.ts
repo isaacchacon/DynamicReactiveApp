@@ -5,6 +5,7 @@ import { QuestionBase } from '../dynamic-apply-now/./question-base';
 import {QuestionGroup} from '../dynamic-apply-now/./question-group';
 import { TextboxQuestion } from '../dynamic-apply-now/./question-textbox';
 
+import * as moment from 'moment';
 @Injectable()
 export class QuestionControlService {
   constructor(private fb:FormBuilder) { }
@@ -52,6 +53,18 @@ export class QuestionControlService {
           if(textBoxQuestion.currency){
             validators.push(Validators.pattern(/(?=.*\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/))
           }
+        }
+        if(question.controlType=='date'){
+          //add custom datePicker validator for blur event:
+          validators.push(abstractControl=>{
+            let validStrings = ["MM/DD/YYYY", "MM/DD/YY", "M/D/YYYY", "M/D/YY"];
+            let inputValue= abstractControl.value;
+            if(typeof inputValue !== "string")// means this is a valid Date object.
+            return null;
+            if(validStrings.some(stringFormat=> moment(inputValue, stringFormat, true).isValid()))
+            return null;
+            return {'matDatepickerParse': {value:abstractControl.value}};
+          });
         }
            group[question.key] = new FormControl(question.value,{validators: validators, 
             updateOn:question.controlType=="dropdown"?"change":"blur"});
