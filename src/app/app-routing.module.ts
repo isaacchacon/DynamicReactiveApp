@@ -5,9 +5,11 @@ import {ApplyNowComponent} from './apply-now/apply-now.component';
 import {DynamicApplyNowComponent} from './dynamic-apply-now/dynamic-apply-now.component';
 import {CanDeactivateGuard} from './services/can-deactivate-guard.service';
 import {SomethingWentWrongComponent} from './something-went-wrong/something-went-wrong.component';
+import { PropertiesComponent } from './properties/properties.component';
 
 const routes: Routes = [
     { path: 'applynow', component: ApplyNowComponent },
+    {path: 'props', component: PropertiesComponent},
     { path: 'dapplynow', component: DynamicApplyNowComponent,canDeactivate:[CanDeactivateGuard] },
     // { path: 'heroes', component: HeroesComponent },
     // { path: 'dashboard', component: DashboardComponent },

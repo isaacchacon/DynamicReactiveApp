@@ -17,6 +17,8 @@ import { SomethingWentWrongComponent } from './something-went-wrong/something-we
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { PropertiesComponent } from './properties/properties.component';
+import { RemoteDataService } from './services/remote-data.service';
 
 
 
@@ -28,12 +30,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     DynamicApplyNowComponent,
     DynamicQuestionComponent,
     SomethingWentWrongComponent,
+    PropertiesComponent,
     
   ],
   imports: [
     BrowserModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule, MatDatepickerModule,MatMomentDateModule,BrowserAnimationsModule
   ],
-  providers: [ RemoteQuestionsService, QuestionControlService, DialogService, CanDeactivateGuard],
+  providers: [ RemoteQuestionsService, QuestionControlService, DialogService, CanDeactivateGuard, RemoteDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

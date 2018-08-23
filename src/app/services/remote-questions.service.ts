@@ -9,7 +9,7 @@ export class RemoteQuestionsService{
 
     constructor(private httpClient:HttpClient){}
 
-    questionsUrl = environment.staticJsonPath;
+    questionsUrl = environment.host+environment.staticJsonPath;
 
     getRemoteQuestions():Observable<QuestionGroup>{
         return this.httpClient.get<QuestionGroup>(this.questionsUrl);

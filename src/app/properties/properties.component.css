@@ -1,0 +1,5 @@
+.tileHover:hover{
+   cursor:pointer;
+   border:#888 1px solid;
+   font-weight:bolder!important;
+}

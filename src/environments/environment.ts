@@ -5,5 +5,9 @@
 
 export const environment = {
   production: false,
-  staticJsonPath: "http://localhost:3000/sample-data/dynamicRentalsField.json"
+  host:"http://localhost:3000",
+  apiPathProperties:"/properties",
+  staticJsonPath: "/sample-data/dynamicRentalsField.json",
+  propertiesImagesPath:"/images/Properties/"
+
 };

@@ -1,9 +1,9 @@
 import { Injectable }   from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder, ValidatorFn, AbstractControl, FormArray } from '@angular/forms';
 
-import { QuestionBase } from '../dynamic-apply-now/./question-base';
-import {QuestionGroup} from '../dynamic-apply-now/./question-group';
-import { TextboxQuestion } from '../dynamic-apply-now/./question-textbox';
+import { QuestionBase } from '../dynamic-apply-now/question-base';
+import {QuestionGroup} from '../dynamic-apply-now/question-group';
+import { TextboxQuestion } from '../dynamic-apply-now/question-textbox';
 
 import * as moment from 'moment';
 @Injectable()
