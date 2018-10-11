@@ -19,6 +19,7 @@ import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { PropertiesComponent } from './properties/properties.component';
 import { RemoteDataService } from './services/remote-data.service';
+import { PropertyComponent } from './property/property.component';
 
 
 
@@ -31,6 +32,7 @@ import { RemoteDataService } from './services/remote-data.service';
     DynamicQuestionComponent,
     SomethingWentWrongComponent,
     PropertiesComponent,
+    PropertyComponent,
     
   ],
   imports: [

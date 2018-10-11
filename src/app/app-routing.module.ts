@@ -6,10 +6,13 @@ import {DynamicApplyNowComponent} from './dynamic-apply-now/dynamic-apply-now.co
 import {CanDeactivateGuard} from './services/can-deactivate-guard.service';
 import {SomethingWentWrongComponent} from './something-went-wrong/something-went-wrong.component';
 import { PropertiesComponent } from './properties/properties.component';
+import {PropertyComponent} from './property/property.component';
 
 const routes: Routes = [
     { path: 'applynow', component: ApplyNowComponent },
+    {path: 'props/:id', component: PropertyComponent},
     {path: 'props', component: PropertiesComponent},
+    
     { path: 'dapplynow', component: DynamicApplyNowComponent,canDeactivate:[CanDeactivateGuard] },
     // { path: 'heroes', component: HeroesComponent },
     // { path: 'dashboard', component: DashboardComponent },

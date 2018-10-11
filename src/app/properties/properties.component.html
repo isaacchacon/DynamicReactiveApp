@@ -22,14 +22,17 @@
         <div>
           Other features: {{prop.otherFeatures}}
         </div>
-        <div>
-          <img [src]="getImageUrl(prop)" alt="{{prop.title}} main picture"/>
-          Location:
-          <iframe [src]="getIframeUrl(prop)" width="250" height="250" frameborder="0" style="border:0" allowfullscreen></iframe>
+        <div class="row">
+          <div class="col-md-6 col-xs-12">
+            <img [src]="getImageUrl(prop)" class="img-responsive img-rounded" alt="{{prop.title}} main picture"/>
+          </div>
+          <div class="col-md-6 col-xs-12">
+            <iframe  [src]="getIframeUrl(prop)" width="250" height="250" frameborder="0" style="border:0" allowfullscreen></iframe>
+          </div>
         </div>
-    </div>
-    <div>
-      <a href ="https://www.google.com">More details...</a>
+        <div>
+            <a [routerLink]="['/props', prop.idProperty]">More details...</a>
+        </div>
     </div>
   </div>
 
