@@ -27,11 +27,13 @@ export class Property{
     clicked:boolean;
     
     // pending: load all the images if requested perhaps?
+    //expected to come already sorted.
     images:Image[];
 }
 
 export class Image{
-    path:string;
+    imagePath:string;
     description:string;
     order:number;
+    title:string;
 }

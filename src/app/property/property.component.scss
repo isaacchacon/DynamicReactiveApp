@@ -1,11 +1,19 @@
 .topBar{
-    margin: 10px 0px;
+    margin: 10px 0px 0px 0px;
     padding-top: 0px;
     padding-bottom: 0px;
     padding-left:15px;
 }
 
-leftMargin{
+.outerContainer{
+    padding:0px;
+}
+
+.zeroMargin{
+    margin:0px;
+}
+
+.leftMargin{
     margin-left:15px;
 }
 
@@ -30,7 +38,11 @@ leftMargin{
 
     /* Hide the images by default */
     .mySlides {
-    display: none;
+        display:block;
+        background-color:black;
+        text-align:center;
+        height:70vh;
+        line-height:70vh;
     }
 
     /* Add a pointer when hovering over the thumbnail images */
@@ -65,6 +77,7 @@ leftMargin{
     .prev:hover,
     .next:hover {
     background-color: rgba(0, 0, 0, 0.8);
+    text-decoration: none;
     }
 
     /* Number text (1/3 etc) */
@@ -74,6 +87,7 @@ leftMargin{
     padding: 8px 12px;
     position: absolute;
     top: 0;
+    line-height:20px;
     }
 
     /* Container for image text */
@@ -84,25 +98,38 @@ leftMargin{
     color: white;
     }
 
+    .rowW3{
+        height: 20vh;
+        line-height: 20vh;
+        background-color:black;
+    }
+
     .rowW3:after {
     content: "";
     display: table;
     clear: both;
+    
     }
 
     /* Six columns side by side */
     .column {
     float: left;
     width: 16.66%;
+    vertical-align: middle;
+    text-align: center;
+    border-left: 1px white solid;
+    border-right: 1px white solid;
     }
 
     /* Add a transparency effect for thumnbail images */
-    .demo {
+    .thumb {
     opacity: 0.6;
+    max-height:20vh;
+    max-width:100%;
     }
 
     .active,
-    .demo:hover {
+    .thumb:hover {
     opacity: 1;
     }
 }

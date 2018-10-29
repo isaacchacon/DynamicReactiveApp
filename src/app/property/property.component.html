@@ -14,54 +14,31 @@
     <strong>{{prop.parkingSpaces}}</strong> parking spaces
   </h5>
 </div>
-<div class="row">
+<div  class="row zeroMargin" *ngIf="prop?.images?.length">
   <!-- this DIV contains the carrousel-->
-  <div class="col-md-9 col-xs-12">
+  <div class="col-md-9 col-xs-12 outerContainer">
     <!-- Container for the image gallery -->
       <div class="containerW3Schools carrousel">
       <!-- Full-width images with number text -->
-      <div class="mySlides" style="display:block">
-        <div class="numbertext">1 / 4</div>
-          <img src="http://localhost:3000/images/Properties/4-0.jpg" style="width:100%">
+      <div class="mySlides" style="">
+        <div class="numbertext">{{slideIndex+1}} / {{prop.images.length}}</div>
+        <a [href] = "getImageUrl(prop.images[slideIndex].imagePath)" >
+          <img [src]="getImageUrl(prop.images[slideIndex].imagePath)" style="max-width:100%;max-height:70vh;vertical-align: middle;">
+        </a>
       </div>
-    
-      <div class="mySlides">
-        <div class="numbertext">2 / 4</div>
-          <img src="http://localhost:3000/images/Properties/4-1.jpg" style="width:100%">
-      </div>
-    
-      <div class="mySlides">
-        <div class="numbertext">3 / 4</div>
-          <img src="http://localhost:3000/images/Properties/4-2.jpg" style="width:100%">
-      </div>
-    
-      <div class="mySlides">
-        <div class="numbertext">4 / 4</div>
-          <img src="http://localhost:3000/images/Properties/4-3.jpg" style="width:100%">
-      </div>
-    
       <!-- Next and previous buttons -->
-      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+      <a class="prev" (click)="showSlides(slideIndex-1)">&#10094;</a>
+      <a class="next" (click)="showSlides(slideIndex+1)">&#10095;</a>
     
       <!-- Image text -->
       <div class="caption-container">
-        <p id="caption"></p>
+        <p id="caption">{{prop.images[slideIndex].title}}
+          {{prop.images[slideIndex].description?(' - '+prop.images[slideIndex].description):''}} </p>
       </div>
-    
       <!-- Thumbnail images -->
       <div class="rowW3">
-        <div class="column">
-          <img class="demo cursor active" src="http://localhost:3000/images/Properties/4-0.jpg" style="width:100%" onclick="currentSlide(1)" alt="The Woods">
-        </div>
-        <div class="column"> 
-          <img class="demo cursor" src="http://localhost:3000/images/Properties/4-1.jpg" style="width:100%" onclick="currentSlide(2)" alt="Cinque Terre">
-        </div>
-        <div class="column">
-          <img class="demo cursor" src="http://localhost:3000/images/Properties/4-2.jpg" style="width:100%" onclick="currentSlide(3)" alt="Mountains and fjords">
-        </div>
-        <div class="column">
-          <img class="demo cursor" src="http://localhost:3000/images/Properties/4-3.jpg" style="width:100%" onclick="currentSlide(4)" alt="Northern Lights">
+        <div *ngFor="let img of prop.images; let i = index" class="column">
+            <img class="thumb cursor" [ngClass]="{'active':i==slideIndex}" [src]="getImageUrl(img.imagePath)"  (click)="showSlides(i)" alt="img.title">
         </div>
       </div>
     </div>

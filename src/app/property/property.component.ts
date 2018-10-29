@@ -4,6 +4,9 @@ import {switchMap, map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {RemoteDataService} from '../services/remote-data.service';
 import {Property} from '../models/JsonModel';
+import {DomSanitizer} from '@angular/platform-browser';
+import {environment} from '../../environments/environment';
+
 
 @Component({
   selector: 'app-property',
@@ -14,8 +17,13 @@ export class PropertyComponent implements OnInit {
 
   prop:Property;
   currentId:number;
+  slideIndex = 0;
   
-  constructor(private activatedRoute: ActivatedRoute, private router:Router, private remoteDataService:RemoteDataService) { }
+  //if likely to change then usie gitHub friendly syntax params.
+  constructor(private activatedRoute: ActivatedRoute,
+     private router:Router,
+      private remoteDataService:RemoteDataService,
+    private domSanitizationService: DomSanitizer) { }
 
   ngOnInit() {
      this.activatedRoute.paramMap.pipe(
@@ -28,18 +36,29 @@ export class PropertyComponent implements OnInit {
            return this.remoteDataService.getProperty(paramId)
         }else{
           this.router.navigate(['props']);
-          return Observable.of([new Property()]);
+          return Observable.of(new Property());
         }
-      }),
-      map(x=>{
-        if(x&&x.length)
-        return x[0];
-        return null;
-     })
+      })
     ).subscribe(u =>{
       this.prop = u;
       this.currentId = u.idProperty;
+      this.showSlides(this.slideIndex);
     });
+  }
+
+  showSlides(n:number) {
+    if (n >= this.prop.images.length)
+      this.slideIndex = 0
+    else
+    if (n < 0)
+      this.slideIndex = this.prop.images.length-1
+    else
+      this.slideIndex=n;
+  }
+
+  getImageUrl(urlSuffix:string){
+    return this.domSanitizationService.bypassSecurityTrustResourceUrl(
+      environment.host+environment.propertiesImagesPath+urlSuffix);
   }
 
 }

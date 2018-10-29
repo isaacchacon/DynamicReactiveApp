@@ -17,8 +17,8 @@ export class RemoteDataService{
      * if there is a result it must be in [0] position.
      * @param id 
      */
-    getProperty(id:number):Observable<Property[]>{
-        return this.httpClient.get<Property[]>(environment.host+environment.apiPathProperties+'/'+id);
+    getProperty(id:number):Observable<Property>{
+        return this.httpClient.get<Property>(environment.host+environment.apiPathProperties+'/'+id);
 
     }
     
